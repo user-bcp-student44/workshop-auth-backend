@@ -62,3 +62,50 @@
 - `GET /q/health`
   - Input: sin cuerpo.
   - Output: endpoint de health provisto por extensión `quarkus-smallrye-health` (documentado en README).
+
+## Ejemplos de uso
+- `POST /auth/login`
+  - Request (JSON):
+    ```json
+    {
+      "username": "<username>",
+      "password": "<password>",
+      "client": "<client>"
+    }
+    ```
+  - Response 200 (JSON):
+    ```json
+    {
+      "token": "BASE64_TOKEN",
+      "expiresIn": 3600,
+      "user": {
+        "username": "<username>",
+        "displayName": "<displayName>",
+        "role": "<role>"
+      },
+      "debug": "authenticated-with-legacy-flow"
+    }
+    ```
+  - Response 400 (JSON):
+    ```json
+    {
+      "message": "Username is required"
+    }
+    ```
+  - Response 401 (JSON):
+    ```json
+    {
+      "message": "Invalid user <username> or password"
+    }
+    ```
+- `GET /q/health`
+  - Request (JSON):
+    ```json
+    {}
+    ```
+  - Response (JSON):
+    ```json
+    {
+      "status": "UP"
+    }
+    ```

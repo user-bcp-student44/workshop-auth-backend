@@ -7,7 +7,7 @@ description: Revisa el proyecto para asegurar que se comprende el contexto, alca
 
 ## 1) Metadata
 -- **Skill ID:** feature-project-knowledge
-- **Version:** 0.1.0
+- **Version:** 0.1.1
 - **Purpose:** Estandarizar el entendimiento de un proyecto java antes de realizar cambios.
 - **Audience (roles):** Tech Lead, Backend developer
 - **When to use:** Antes de realizar cambios sobre el proyecto.
@@ -26,6 +26,7 @@ Devuelve **solo** un documento Markdown con estas secciones y bullets que se gua
 2. **Contexto del proyecto**
 3. **Diagrama de componentes**
 4. **Apis implementadas, inputs y outputs**
+5. **Ejemplos de uso** Incluye para cada API un JSON de ejemplo para el request y el response.
 ## 4) Constraints
 - No inventes información, si no existe código fuente disponible, indícalo claramente.
 - No incluyas datos sensibles ni secretos.
