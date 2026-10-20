@@ -28,7 +28,7 @@ Proporciona la información en este formato:
 - **Team Definition of Done (DoD):** (if available)
 
 ## 3) Output
-Devuelve **solo** un documento Markdown con estas secciones y bullets:
+Devuelve **solo** un documento Markdown con estas secciones y bullets que se guarde bajo la ruta docs del proyecto:
 
 1. **Summary**
 2. **Scope**
