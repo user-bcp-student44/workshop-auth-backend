@@ -28,7 +28,7 @@ Este documento describe lo que el frontend **envía**, lo que **espera recibir**
 |---|---|---|---|
 | `username` | `string` | Sí | Campo de entrada `username` en login |
 | `password` | `string` | Sí | Campo de entrada `password` en login |
-| `client` | literal string | Sí | `"angular-workshop"` fijo en código |
+| `client` | `string` | Sí | `"angular-workshop"` fijo en código; no puede faltar ni contener solo espacios |
 
 **Ejemplo real de request**
 ```http
@@ -56,15 +56,19 @@ Content-Type: application/json
 | `user` | objeto | No (fallback `{}`) | Se guarda para saludo/contexto de dashboard |
 | `user.username` | `string` | No | Se usa para query `owner` en tareas |
 | `user.displayName` | `string` | No | Se usa para saludo en dashboard |
+| `expiresIn` | `integer` | No | Duración restante del token, en segundos; difiere como máximo un segundo de `exp - now` |
+
+El token es un JWT/JWS firmado con HS256 e incluye `sub` (username autenticado), `client` (valor enviado), `iat` y `exp` como segundos desde epoch. `exp` es posterior a `iat`; el consumidor debe rechazarlo en `exp` y después. Estos claims no cambian los campos que consume la UI.
 
 **Ejemplo real de respuesta exitosa consumible**
 ```json
 {
-  "token": "token-123",
+  "token": "<signed-jwt>",
   "user": {
     "username": "student",
     "displayName": "Student User"
-  }
+  },
+  "expiresIn": 3600
 }
 ```
 
@@ -74,6 +78,7 @@ Content-Type: application/json
 |---|---|---|
 | Usuario vacío | Validación en `LoginComponent` antes de HTTP | Muestra mensaje: `No se pudo autenticar.` + `Ingrese un usuario.` |
 | Contraseña vacía | Validación en `LoginComponent` antes de HTTP | Muestra mensaje: `No se pudo autenticar.` + `Ingrese una contraseña.` |
+| `client` ausente o en blanco | Backend (`POST /auth/login`, HTTP 400) | Entra a `catch`, mismo mensaje genérico; no se emite token |
 | Timeout de red (configurado 5000 ms) | `AuthService` (`axios.post` con `timeout: 5000`) | Entra a `catch`, muestra mensaje genérico: `Verifica tus credenciales e inténtalo de nuevo.` |
 | Credenciales inválidas / 401 / 403 | `AuthService` (error HTTP) | Entra a `catch`, mismo mensaje genérico; no expone detalle del backend |
 | Respuesta inesperada sin `token` | `LoginComponent` tras respuesta exitosa | Muestra `El backend respondió sin token.` y no navega |
