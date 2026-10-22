@@ -14,6 +14,17 @@ mvn quarkus:dev
 
 Servicio: `http://localhost:8080`
 
+## Secreto de firma para el laboratorio
+
+El servicio requiere `AUTH_TOKEN_SECRET` con al menos 32 bytes UTF-8. No existe un valor predeterminado; si falta, está vacío o es demasiado corto, la aplicación no inicia. Para el laboratorio local aislado, configura un valor no productivo antes de iniciar:
+
+```powershell
+$env:AUTH_TOKEN_SECRET = '<non-production-secret-at-least-32-bytes>'
+mvn quarkus:dev
+```
+
+No guardes secretos reales en el repositorio. El perfil de pruebas usa una clave ficticia local en `src/test/resources/application.properties`; nunca debe reutilizarse fuera de pruebas.
+
 Credenciales locales:
 
 - `student` / `Workshop123!`
